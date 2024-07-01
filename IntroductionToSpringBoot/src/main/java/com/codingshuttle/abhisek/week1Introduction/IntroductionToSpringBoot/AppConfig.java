@@ -12,4 +12,9 @@ public class AppConfig {
     Apple getApple(){
         return new Apple();
     }
+
+    @Bean
+    Apple getApple2(){
+        return new Apple();
+    }
 }
