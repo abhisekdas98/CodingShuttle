@@ -31,6 +31,9 @@ public class IntroductionToSpringBootApplication implements CommandLineRunner {
 	@Qualifier("getApple2")
 	Apple apple5;
 
+	@Autowired
+	DBService dbService;
+
 	public static void main(String[] args) {
 	    SpringApplication.run(IntroductionToSpringBootApplication.class, args);
 //		String[] beanNames = context.getBeanDefinitionNames();
@@ -50,5 +53,6 @@ public class IntroductionToSpringBootApplication implements CommandLineRunner {
 		System.out.println(apple3.hashCode());
 		System.out.println(apple4.hashCode());
 		System.out.println(apple5.hashCode());
+		System.out.println(dbService.getData());
 	}
 }
