@@ -2,9 +2,13 @@ package com.example.springbootwebtutuorial.controllers;
 
 import com.example.springbootwebtutuorial.dto.EmployeeDTO;
 import com.example.springbootwebtutuorial.services.EmployeeService;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/employees")
@@ -22,7 +26,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeID}")
-    public EmployeeDTO getEmployeeById(@PathVariable("employeeID") Long employeeId){
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable("employeeID") Long employeeId){
 
         return employeeService.findById(employeeId);
     }
@@ -35,11 +39,24 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO inputEmployee){
+    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody EmployeeDTO inputEmployee){
         return employeeService.createNewEmployee(inputEmployee);
     }
 
-    @PutMapping String  updateEmployee(){
-        return  "Hi FROM PUT";
+    @PutMapping(path = "/{employeeId}")
+    public ResponseEntity<EmployeeDTO>  updateEmployeeById(@RequestBody EmployeeDTO employeeDTO,@PathVariable(name = "employeeId") Long id){
+
+        return  employeeService.updateEmployeeById(id,employeeDTO);
+    }
+
+    @DeleteMapping(path = "/{employeeId}")
+    public ResponseEntity<Boolean>  deleteEmployeeById(@PathVariable(name = "employeeId") Long id){
+       return employeeService.deleteEmployeeById(id);
+    }
+
+    @PatchMapping(path = "/{employeeId}")
+    public EmployeeDTO  updatePartialEmployeeById(Map<String, Objects> updates, @PathVariable(name = "employeeId") Long id){
+
+        return  employeeService.updatePartialEmployeeById(id,updates);
     }
 }
