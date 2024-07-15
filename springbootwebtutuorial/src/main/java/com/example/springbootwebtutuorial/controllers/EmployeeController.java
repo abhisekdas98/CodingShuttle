@@ -2,6 +2,7 @@ package com.example.springbootwebtutuorial.controllers;
 
 import com.example.springbootwebtutuorial.dto.EmployeeDTO;
 import com.example.springbootwebtutuorial.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +40,12 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody EmployeeDTO inputEmployee){
+    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody @Valid EmployeeDTO inputEmployee){
         return employeeService.createNewEmployee(inputEmployee);
     }
 
     @PutMapping(path = "/{employeeId}")
-    public ResponseEntity<EmployeeDTO>  updateEmployeeById(@RequestBody EmployeeDTO employeeDTO,@PathVariable(name = "employeeId") Long id){
+    public ResponseEntity<EmployeeDTO>  updateEmployeeById(@RequestBody @Valid EmployeeDTO employeeDTO,@PathVariable(name = "employeeId") Long id){
 
         return  employeeService.updateEmployeeById(id,employeeDTO);
     }
