@@ -2,6 +2,7 @@ package com.example.springbootwebtutuorial.services;
 
 import com.example.springbootwebtutuorial.dto.EmployeeDTO;
 import com.example.springbootwebtutuorial.entities.EmployeeEntity;
+import com.example.springbootwebtutuorial.exceptions.ResourceNotFoundException;
 import com.example.springbootwebtutuorial.reposiroties.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.util.ReflectionUtils;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class EmployeeService {
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).orElse(null);
         if(employeeEntity == null)
         {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException("Employee not found with id: "+employeeId);
         }
         EmployeeDTO employeeDTO = mapper.map(employeeEntity, EmployeeDTO.class);
         return ResponseEntity.ok(employeeDTO);
